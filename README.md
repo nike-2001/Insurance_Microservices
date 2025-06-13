@@ -65,7 +65,7 @@ The project consists of the following modules:
 - **Containerization**: Docker
 - **Orchestration**: Kubernetes
 - **CI/CD**: Jenkins
-- **Database**: MySQL
+- **Database**: MySQL, H2
 - **Other**: REST APIs, Maven (build tool)
 
 ## Setup and Installation
@@ -76,4 +76,3 @@ The project consists of the following modules:
 - Kubernetes (Minikube or a cloud provider like GKE, EKS, etc.)
 - Jenkins (for CI/CD pipeline)
 - Auth0 account for authentication setup
-
