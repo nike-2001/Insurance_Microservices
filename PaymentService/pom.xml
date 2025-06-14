@@ -108,7 +108,7 @@
 						<image>openjdk:21</image>
 					</from>
 					<to>
-						<image>registry.hub.docker.com/nikhilspring/paymentservice</image>
+						<image>registry.hub.docker.com/nikhilkorrapati/paymentservice</image>
 						<tags>${project.version}</tags>
 					</to>
 				</configuration>

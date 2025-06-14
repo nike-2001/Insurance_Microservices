@@ -64,7 +64,6 @@
 			<groupId>com.nikhilspring</groupId>
 			<artifactId>ProductService</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-			<scope>compile</scope>
 		</dependency>
 
 		<dependency>
@@ -147,7 +146,7 @@
 						<image>openjdk:21</image>
 					</from>
 					<to>
-						<image>registry.hub.docker.com/nikhilspring/orderservice</image>
+						<image>registry.hub.docker.com/nikhilkorrapati/orderservice</image>
 						<tags>${project.version}</tags>
 					</to>
 				</configuration>
