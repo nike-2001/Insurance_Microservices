@@ -125,7 +125,7 @@
 						<image>openjdk:21</image>
 					</from>
 					<to>
-						<image>registry.hub.docker.com/nikhilspring/cloudgateway</image>
+						<image>registry.hub.docker.com/nikhilkorrapati/cloudgateway</image>
 						<tags>${project.version}</tags>
 					</to>
 				</configuration>

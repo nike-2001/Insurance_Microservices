@@ -59,7 +59,7 @@
 						<image>openjdk:21</image>
 					</from>
 					<to>
-						<image>registry.hub.docker.com/nikhilspring/serviceregistry</image>
+						<image>registry.hub.docker.com/nikhilkorrapati/serviceregistry</image>
 						<tags>${project.version}</tags>
 					</to>
 				</configuration>

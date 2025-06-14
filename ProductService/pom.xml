@@ -112,7 +112,7 @@
 						<image>openjdk:21</image>
 					</from>
 					<to>
-						<image>registry.hub.docker.com/nikhilspring/productservice</image>
+						<image>registry.hub.docker.com/nikhilkorrapati/productservice</image>
 						<tags>${project.version}</tags>
 					</to>
 				</configuration>

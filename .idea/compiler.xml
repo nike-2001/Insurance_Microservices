@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="ConfigServer" />
+        <module name="OrderService" />
+        <module name="service-registry" />
+        <module name="PaymentService" />
+        <module name="ProductService" />
+        <module name="CloudGateway" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="spring-boot-microservices-demo" target="21" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="CloudGateway" options="-parameters" />
+      <module name="ConfigServer" options="-parameters" />
+      <module name="OrderService" options="-parameters" />
+      <module name="PaymentService" options="-parameters" />
+      <module name="ProductService" options="-parameters" />
+      <module name="service-registry" options="-parameters" />
+      <module name="spring-boot-microservices-demo" options="-parameters -parameters" />
+    </option>
+  </component>
+</project>
