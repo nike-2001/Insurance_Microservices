@@ -1,10 +1,26 @@
 version: '3'
 services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: policydb
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    command: --default-authentication-plugin=mysql_native_password
+
   serviceregistry:
     image: 'nikhilspring/serviceregistry:0.0.1'
     container_name: serviceregistry
     ports:
       - '8761:8761'
+    depends_on:
+      - mysql
+
   configserver:
     image: 'nikhilspring/configserver:0.0.1'
     container_name: configserver
@@ -19,6 +35,7 @@ services:
       retries: 5
     depends_on:
       - serviceregistry
+
   cloudgateway:
     image: 'nikhilspring/cloudgateway:latest'
     container_name: cloudgateway
@@ -30,3 +47,58 @@ services:
     depends_on:
       configserver:
         condition: service_healthy
+
+  policyservice:
+    image: 'nikhilkorrapati/policyservice:latest'
+    container_name: policyservice
+    ports:
+      - '8082:8082'
+    environment:
+      - EUREKA_SERVER_ADDRESS=http://serviceregistry:8761/eureka
+      - CONFIG_SERVER_URL=configserver
+      - DB_HOST=mysql
+    depends_on:
+      - configserver
+      - mysql
+
+  productservice:
+    image: 'nikhilkorrapati/productservice:latest'
+    container_name: productservice
+    ports:
+      - '8083:8083'
+    environment:
+      - EUREKA_SERVER_ADDRESS=http://serviceregistry:8761/eureka
+      - CONFIG_SERVER_URL=configserver
+      - DB_HOST=mysql
+    depends_on:
+      - configserver
+      - mysql
+
+  paymentservice:
+    image: 'nikhilkorrapati/paymentservice:latest'
+    container_name: paymentservice
+    ports:
+      - '8081:8081'
+    environment:
+      - EUREKA_SERVER_ADDRESS=http://serviceregistry:8761/eureka
+      - CONFIG_SERVER_URL=configserver
+      - DB_HOST=mysql
+    depends_on:
+      - configserver
+      - mysql
+
+  claimservice:
+    image: 'nikhilkorrapati/claimservice:latest'
+    container_name: claimservice
+    ports:
+      - '8084:8084'
+    environment:
+      - EUREKA_SERVER_ADDRESS=http://serviceregistry:8761/eureka
+      - CONFIG_SERVER_URL=configserver
+      - DB_HOST=mysql
+    depends_on:
+      - configserver
+      - mysql
+
+volumes:
+  mysql_data:

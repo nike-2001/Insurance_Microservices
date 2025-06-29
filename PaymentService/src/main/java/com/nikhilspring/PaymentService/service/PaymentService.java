@@ -4,7 +4,9 @@ import com.nikhilspring.PaymentService.model.PaymentRequest;
 import com.nikhilspring.PaymentService.model.PaymentResponse;
 
 public interface PaymentService {
-    long doPayment(PaymentRequest paymentRequest);
+    long processPayment(PaymentRequest paymentRequest);
 
-    PaymentResponse getPaymentDetailsByOrderId(String orderId);
+    PaymentResponse getPaymentDetailsByPolicyId(String policyId);
+
+    PaymentResponse getPaymentDetailsByCustomerId(String customerId);
 }

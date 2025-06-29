@@ -1,9 +1,9 @@
 server:
-  port: 8080
+  port: 8083
 
 spring:
   datasource:
-    url: jdbc:mysql://${DB_HOST:localhost}:3306/productdb
+    url: jdbc:mysql://${DB_HOST:localhost}:3306/insuranceproductdb
     username: root
     password: root
     driverClassName: com.mysql.cj.jdbc.Driver
@@ -11,11 +11,11 @@ spring:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
       ddl-auto: update
+    show-sql: true
   application:
     name: PRODUCT-SERVICE
   config:
     import: configserver:http://${CONFIG_SERVER_URL:localhost:9296}
-    # import: configserver:http://localhost:9296
 
   security:
     oauth2:
@@ -23,13 +23,16 @@ spring:
         jwt:
           issuer-uri: https://dev-ljd1xbrz4gjmjlac.us.auth0.com/
 
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: ${EUREKA_SERVER_ADDRESS:http://localhost:8761/eureka}
 
-
-#eureka:
-#  instance:
-#    prefer-ip-address: true
-#  client:
-#    fetch-registry: true
-#    register-with-eureka: true
-#    service-url:
-#      defaultZone: ${EUREKA_SERVER_ADDRESS:http://localhost:8761/eureka}
+logging:
+  level:
+    com.nikhilspring.ProductService: DEBUG
+    org.hibernate.SQL: DEBUG

@@ -18,5 +18,10 @@ public class PaymentResponse {
     private PaymentMode paymentMode;
     private long amount;
     private Instant paymentDate;
-    private long orderId;
+    private long policyId;
+    private String paymentType;
+    private String referenceNumber;
+    private String customerId;
+    private String policyNumber;
+    private String transactionId;
 }

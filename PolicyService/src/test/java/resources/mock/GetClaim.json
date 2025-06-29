@@ -1,0 +1,8 @@
+{
+  "claimId": 1,
+  "status": "PENDING",
+  "claimType": "DEATH_BENEFIT",
+  "amount": 100000,
+  "claimDate": "2024-01-15T10:30:00.000Z",
+  "policyId": 1
+} 

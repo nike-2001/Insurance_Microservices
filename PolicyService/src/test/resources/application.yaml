@@ -1,0 +1,83 @@
+#server:
+#  port: 0
+#
+#spring:
+#  application:
+#    name: POLICY-SERVICE
+#  config:
+#    import: optional:configserver:http://localhost:9296
+#  datasource:
+#    url: jdbc:h2:mem:policy
+#    username: nikhil
+#    password: nikhil
+#    driverClassName: org.h2.Driver
+#  h2:
+#    console:
+#      enabled: true
+#      path: /h2-console
+#  jpa:
+#    database-platform: org.hibernate.dialect.H2Dialect
+#    hibernate:
+#      ddl-auto: create-drop
+#    show-sql: true
+#    properties:
+#      hibernate:
+#        format_sql: true
+#  sql:
+#    init:
+#      mode: never
+#  security:
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          issuer-uri: https://dev-ljd1xbrz4gjmjlac.us.auth0.com/
+#
+#resilience4j:
+#  circuitbreaker:
+#    instances:
+#      external:
+#        event-consumer-buffer-size: 10
+#        failure-rate-threshold: 50
+#        minimum-number-of-calls: 5
+#        automatic-transition-from-open-to-half-open-enabled: true
+#        wait-duration-in-open-state: 5s
+#        permitted-number-of-calls-in-half-open-state: 3
+#        sliding-window-size: 10
+#        sliding-window-type: COUNT_BASED
+#
+#eureka:
+#  client:
+#    enabled: false
+
+
+spring:
+  config:
+    import: optional:configserver:http://localhost:9296
+  datasource:
+    url: jdbc:h2:mem:order
+    username: nikhil
+    password: nikhil
+    driverClassName: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://dev-29034418.okta.com/oauth2/default
+      client:
+        registration:
+          internal-client:
+            provider: okta
+            authorization-grant-type: client_credentials
+            scope: internal
+            client-id: 0oafupj0psk5UWPf45d7
+            client-secret: o1jxBu3MkpTlE-Vwb5JCMk1Xx5SzFEIYWxvlxU0CfB9O2lOl2NWB4rZc9Hs_oivq
+        provider:
+          okta:
+            issuer-uri: https://dev-29034418.okta.com/oauth2/default
+
+
+eureka:
+  client:
+    enabled: false

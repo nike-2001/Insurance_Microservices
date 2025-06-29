@@ -1,0 +1,13 @@
+{
+  "paymentId": 1,
+  "status": "SUCCESS",
+  "paymentMode": "CASH",
+  "amount": 500,
+  "paymentDate": "2024-01-15T10:30:00.000Z",
+  "policyId": 1,
+  "customerId": "1",
+  "policyNumber": "POL001",
+  "paymentType": "PREMIUM_PAYMENT",
+  "referenceNumber": "TXN123456789",
+  "transactionId": "TXN123456789"
+}

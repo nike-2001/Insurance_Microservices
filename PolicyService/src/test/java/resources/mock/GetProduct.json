@@ -1,0 +1,10 @@
+{
+  "productId": 1,
+  "productName": "Comprehensive Life Insurance",
+  "productType": "LIFE",
+  "coverageType": "COMPREHENSIVE",
+  "minPremium": 100,
+  "maxCoverage": 500000,
+  "description": "Comprehensive life insurance coverage with additional benefits including critical illness and accidental death coverage",
+  "isActive": true
+}

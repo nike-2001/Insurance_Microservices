@@ -11,15 +11,15 @@ spring:
       default-filters:
         - TokenRelay
       routes:
-        - id : ORDER-SERVICE
-          uri: lb://ORDER-SERVICE
+        - id : POLICY-SERVICE
+          uri: lb://POLICY-SERVICE
           predicates:
-            - Path=/order/**
+            - Path=/policy/**
           filters:
             - name: CircuitBreaker
               args:
-                name: ORDER-SERVICE
-                fallbackuri: forward:/orderServiceFallBack
+                name: POLICY-SERVICE
+                fallbackuri: forward:/policyServiceFallBack
             - name: RequestRateLimiter
               args:
                 redis-rate-limiter.replenishRate: 1
@@ -46,6 +46,19 @@ spring:
               args:
                 name: PRODUCT-SERVICE
                 fallbackuri: forward:/productServiceFallBack
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 1
+                redis-rate-limiter.burstCapacity: 1
+        - id: CLAIM-SERVICE
+          uri: lb://CLAIM-SERVICE
+          predicates:
+            - Path=/claim/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: CLAIM-SERVICE
+                fallbackuri: forward:/claimServiceFallBack
             - name: RequestRateLimiter
               args:
                 redis-rate-limiter.replenishRate: 1

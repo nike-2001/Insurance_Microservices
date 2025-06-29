@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: claim-service-app
+spec:
+  selector:
+    matchLabels:
+      app: claim-service-app
+  template:
+    metadata:
+      labels:
+        app: claim-service-app
+    spec:
+      containers:
+        - name: claim-service-app
+          image: nikhilkorrapati/claimservice
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8084
+          env:
+            - name: CONFIG_SERVER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: config-cm
+                  key: config_url
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-cm
+                  key: hostname
+            - name: EUREKA_SERVER_ADDRESS
+              valueFrom:
+                configMapKeyRef:
+                  name: eureka-cm
+                  key: eureka_service_address
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: claim-service-svc
+spec:
+  selector:
+    app: claim-service-app
+  ports:
+    - port: 80
+      targetPort: 8084 

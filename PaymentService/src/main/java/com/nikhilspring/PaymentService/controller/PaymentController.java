@@ -16,17 +16,25 @@ public class PaymentController {
     private PaymentService paymentService;
 
     @PostMapping
-    public ResponseEntity<Long> doPayment(@RequestBody PaymentRequest paymentRequest) {
+    public ResponseEntity<Long> processPayment(@RequestBody PaymentRequest paymentRequest) {
         return new ResponseEntity<>(
-                paymentService.doPayment(paymentRequest),
+                paymentService.processPayment(paymentRequest),
                 HttpStatus.OK
         );
     }
 
-    @GetMapping("/order/{orderId}")
-    public ResponseEntity<PaymentResponse> getPaymentDetailsByOrderId(@PathVariable String orderId) {
+    @GetMapping("/policy/{policyId}")
+    public ResponseEntity<PaymentResponse> getPaymentDetailsByPolicyId(@PathVariable String policyId) {
         return new ResponseEntity<>(
-                paymentService.getPaymentDetailsByOrderId(orderId),
+                paymentService.getPaymentDetailsByPolicyId(policyId),
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/customer/{customerId}")
+    public ResponseEntity<PaymentResponse> getPaymentDetailsByCustomerId(@PathVariable String customerId) {
+        return new ResponseEntity<>(
+                paymentService.getPaymentDetailsByCustomerId(customerId),
                 HttpStatus.OK
         );
     }
