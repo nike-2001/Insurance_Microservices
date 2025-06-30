@@ -1,4 +1,4 @@
-# Microservices Product Platform
+# Microservices Insurance Product Platform
 
 ## Overview
 This project is a microservices-based product platform designed to handle various functionalities such as policy management, product catalog, claim processing, configuration management, and service discovery. The application leverages modern technologies like Spring Cloud, Docker, Kubernetes, and Jenkins for a scalable and robust architecture. Authentication is implemented using Auth0 for secure user access.
