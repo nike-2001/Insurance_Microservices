@@ -1,0 +1,151 @@
+# Jenkins Configuration for Insurance Project
+# This file contains the configuration for Jenkins tools, credentials, and global settings
+
+jenkins:
+  systemMessage: "Insurance Project CI/CD Pipeline"
+  numExecutors: 2
+  scmCheckoutRetryCount: 3
+  
+  # Global properties
+  globalNodeProperties:
+    - envVars:
+        env:
+          - key: "JAVA_HOME"
+            value: "/usr/lib/jvm/java-21-openjdk"
+          - key: "MAVEN_HOME"
+            value: "/opt/maven"
+          - key: "DOCKER_REGISTRY"
+            value: "nikhilkorrapati"
+          - key: "DOCKER_REGISTRY_SPRING"
+            value: "nikhilspring"
+          - key: "K8S_NAMESPACE"
+            value: "insurance-project"
+
+  # Security settings
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: "admin"
+          password: "admin123"
+        - id: "jenkins"
+          password: "jenkins123"
+
+  # Authorization
+  authorizationStrategy:
+    globalMatrix:
+      permissions:
+        - "Overall/Administer:admin"
+        - "Overall/Read:authenticated"
+        - "Job/Build:authenticated"
+        - "Job/Read:authenticated"
+        - "Job/Workspace:authenticated"
+
+  # Tools configuration
+  tool:
+    git:
+      installations:
+        - name: "Default"
+          home: "git"
+    maven:
+      installations:
+        - name: "Maven-3.9.5"
+          home: "/opt/maven"
+    jdk:
+      installations:
+        - name: "JDK-21"
+          home: "/usr/lib/jvm/java-21-openjdk"
+          properties:
+            - installSource:
+                installers:
+                  - jdkInstaller:
+                      id: "openjdk-21"
+
+# Credentials configuration
+credentials:
+  system:
+    domainCredentials:
+      - credentials:
+          - usernamePassword:
+              scope: GLOBAL
+              id: "docker-registry-credentials"
+              username: "nikhilkorrapati"
+              password: "your-docker-password"
+              description: "Docker Registry Credentials"
+          - usernamePassword:
+              scope: GLOBAL
+              id: "k8s-cluster-credentials"
+              username: "k8s-admin"
+              password: "your-k8s-token"
+              description: "Kubernetes Cluster Credentials"
+          - string:
+              scope: GLOBAL
+              id: "sonar-token"
+              secret: "your-sonar-token"
+              description: "SonarQube Token"
+
+# Plugin configuration
+plugins:
+  - name: "git"
+    version: "4.15.1"
+  - name: "maven-plugin"
+    version: "3.20"
+  - name: "docker-plugin"
+    version: "1.5"
+  - name: "kubernetes"
+    version: "1.10.7"
+  - name: "sonar"
+    version: "2.14"
+  - name: "email-ext"
+    version: "2.87"
+  - name: "pipeline-model-definition"
+    version: "2.2114.v2654ca_721309"
+  - name: "workflow-aggregator"
+    version: "2.6"
+  - name: "blueocean"
+    version: "1.25.8"
+  - name: "dependency-check-jenkins-plugin"
+    version: "5.4.0"
+
+# Pipeline configuration
+pipeline:
+  # Pipeline libraries
+  libraries:
+    - name: "insurance-pipeline-lib"
+      defaultVersion: "main"
+      retriever:
+        modernSCM:
+          scm:
+            git:
+              remote: "https://github.com/your-org/insurance-pipeline-lib.git"
+              credentialsId: "github-credentials"
+
+# Job configuration
+jobs:
+  - script: |
+      pipelineJob('insurance-project-pipeline') {
+        definition {
+          cpsScm {
+            scm {
+              git {
+                remote {
+                  url('https://github.com/your-org/insurance-project.git')
+                  credentials('github-credentials')
+                }
+                branch('*/main')
+              }
+            }
+            scriptPath('Jenkinsfile')
+          }
+        }
+        triggers {
+          pollSCM('H/5 * * * *')
+        }
+        properties([
+          pipelineTriggers([
+            [
+              $class: 'GitHubPushTrigger'
+            ]
+          ])
+        ])
+      } 

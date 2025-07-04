@@ -6,4 +6,4 @@ COPY ${JAR_FILE} claimservice.jar
 
 ENTRYPOINT ["java", "-jar", "/claimservice.jar"]
 
-EXPOSE 8081
+EXPOSE 8084

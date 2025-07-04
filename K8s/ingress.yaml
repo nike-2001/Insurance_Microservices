@@ -1,0 +1,35 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: insurance-ingress
+  namespace: insurance-project
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: insurance.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: cloud-gateway-svc
+            port:
+              number: 80
+      - path: /eureka
+        pathType: Prefix
+        backend:
+          service:
+            name: eureka-lb
+            port:
+              number: 80
+      - path: /zipkin
+        pathType: Prefix
+        backend:
+          service:
+            name: zipkin-lb-svc
+            port:
+              number: 9411 

@@ -9,8 +9,7 @@ spec:
     - ReadWriteOnce
   storageClassName: manual
   hostPath:
-    #    path: "/mnt/data"  # - for Unix/Linux
-    path: "/run/desktop/mnt/host/c/temp/testfiles"
+    path: "/tmp/mysql-data"  # Generic path for local development
     type: DirectoryOrCreate
 ---
 
@@ -73,9 +72,10 @@ metadata:
   name: mysql-initdb-cm
 data:
   init.sql: |
-    CREATE DATABASE IF NOT EXISTS orderdb;
+    CREATE DATABASE IF NOT EXISTS policydb;
     CREATE DATABASE IF NOT EXISTS paymentdb;
     CREATE DATABASE IF NOT EXISTS productdb;
+    CREATE DATABASE IF NOT EXISTS claimdb;
 
 
 ---

@@ -6,4 +6,4 @@ COPY ${JAR_FILE} productservice.jar
 
 ENTRYPOINT ["java", "-jar", "/productservice.jar"]
 
-EXPOSE 8080
+EXPOSE 8083

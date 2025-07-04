@@ -9,7 +9,8 @@ spring:
       server:
         git:
           uri: https://github.com/nike-2001/spring-app-config
-          clone-on-start: true
+          clone-on-start: false
+          timeout: 5
 
 
 eureka:

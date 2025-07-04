@@ -4,7 +4,7 @@ services:
     image: mysql:8.0
     container_name: mysql
     ports:
-      - '3306:3306'
+      - '3307:3306'
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: policydb
@@ -12,93 +12,161 @@ services:
       - mysql_data:/var/lib/mysql
       - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
     command: --default-authentication-plugin=mysql_native_password
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   serviceregistry:
-    image: 'nikhilspring/serviceregistry:0.0.1'
+    build:
+      context: ./service-registry
+      dockerfile: Dockerfile
+    image: 'insurance-project/serviceregistry:latest'
     container_name: serviceregistry
     ports:
       - '8761:8761'
+    environment:
+      - EUREKA_SERVER_ADDRESS=http://host.docker.internal:8761/eureka
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8761/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   configserver:
-    image: 'nikhilspring/configserver:0.0.1'
+    build:
+      context: ./ConfigServer
+      dockerfile: Dockerfile
+    image: 'insurance-project/configserver:latest'
     container_name: configserver
     ports:
       - '9296:9296'
     environment:
-      - EUREKA_SERVER_ADDRESS=http://serviceregistry:8761/eureka
+      - EUREKA_SERVER_ADDRESS=http://host.docker.internal:8761/eureka
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://configserver:9296/actuator/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:9296/actuator/health"]
       interval: 10s
       timeout: 5s
       retries: 5
     depends_on:
-      - serviceregistry
+      serviceregistry:
+        condition: service_healthy
 
   cloudgateway:
-    image: 'nikhilspring/cloudgateway:latest'
+    build:
+      context: ./CloudGateway
+      dockerfile: Dockerfile
+    image: 'insurance-project/cloudgateway:latest'
     container_name: cloudgateway
     ports:
       - '9090:9090'
     environment:
-      - EUREKA_SERVER_ADDRESS=http://serviceregistry:8761/eureka
-      - CONFIG_SERVER_URL=configserver
+      - CONFIG_SERVER_URL=host.docker.internal:9296
+      - EUREKA_SERVER_ADDRESS=http://host.docker.internal:8761/eureka
     depends_on:
       configserver:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9090/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   policyservice:
-    image: 'nikhilkorrapati/policyservice:latest'
+    build:
+      context: ./PolicyService
+      dockerfile: Dockerfile
+    image: 'insurance-project/policyservice:latest'
     container_name: policyservice
     ports:
       - '8082:8082'
     environment:
-      - EUREKA_SERVER_ADDRESS=http://serviceregistry:8761/eureka
-      - CONFIG_SERVER_URL=configserver
-      - DB_HOST=mysql
+      - CONFIG_SERVER_URL=host.docker.internal:9296
+      - EUREKA_SERVER_ADDRESS=http://host.docker.internal:8761/eureka
+      - DB_HOST=host.docker.internal
     depends_on:
-      - configserver
-      - mysql
+      configserver:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8082/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   productservice:
-    image: 'nikhilkorrapati/productservice:latest'
+    build:
+      context: ./ProductService
+      dockerfile: Dockerfile
+    image: 'insurance-project/productservice:latest'
     container_name: productservice
     ports:
       - '8083:8083'
     environment:
-      - EUREKA_SERVER_ADDRESS=http://serviceregistry:8761/eureka
-      - CONFIG_SERVER_URL=configserver
-      - DB_HOST=mysql
+      - CONFIG_SERVER_URL=host.docker.internal:9296
+      - EUREKA_SERVER_ADDRESS=http://host.docker.internal:8761/eureka
+      - DB_HOST=host.docker.internal
     depends_on:
-      - configserver
-      - mysql
+      configserver:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8083/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   paymentservice:
-    image: 'nikhilkorrapati/paymentservice:latest'
+    build:
+      context: ./PaymentService
+      dockerfile: Dockerfile
+    image: 'insurance-project/paymentservice:latest'
     container_name: paymentservice
     ports:
       - '8081:8081'
     environment:
-      - EUREKA_SERVER_ADDRESS=http://serviceregistry:8761/eureka
-      - CONFIG_SERVER_URL=configserver
-      - DB_HOST=mysql
+      - CONFIG_SERVER_URL=host.docker.internal:9296
+      - EUREKA_SERVER_ADDRESS=http://host.docker.internal:8761/eureka
+      - DB_HOST=host.docker.internal
     depends_on:
-      - configserver
-      - mysql
+      configserver:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   claimservice:
-    image: 'nikhilkorrapati/claimservice:latest'
+    build:
+      context: ./ClaimService
+      dockerfile: Dockerfile
+    image: 'insurance-project/claimservice:latest'
     container_name: claimservice
     ports:
       - '8084:8084'
     environment:
-      - EUREKA_SERVER_ADDRESS=http://serviceregistry:8761/eureka
-      - CONFIG_SERVER_URL=configserver
-      - DB_HOST=mysql
+      - CONFIG_SERVER_URL=host.docker.internal:9296
+      - EUREKA_SERVER_ADDRESS=http://host.docker.internal:8761/eureka
+      - DB_HOST=host.docker.internal
     depends_on:
-      - configserver
-      - mysql
+      configserver:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8084/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   mysql_data:

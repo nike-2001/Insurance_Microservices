@@ -13,8 +13,8 @@ spec:
     spec:
       containers:
         - name: payment-service-app
-          image: nikhilkorrapati/paymentservice
-          imagePullPolicy: Always
+          image: insurance/payment-service:latest
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8081
           env:

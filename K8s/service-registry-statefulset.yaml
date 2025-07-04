@@ -15,8 +15,8 @@ spec:
     spec:
       containers:
         - name: eureka
-          image: nikhilkorrapati/serviceregistry
-          imagePullPolicy: Always
+          image: insurance/service-registry:latest
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8761
 
