@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: insurance-project
+  labels:
+    name: insurance-project
+    environment: production 

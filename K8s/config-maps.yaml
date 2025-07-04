@@ -12,7 +12,7 @@ kind: ConfigMap
 metadata:
   name: eureka-cm
 data:
-  eureka_service_address: "http://eureka-0.eureka:8761/eureka"
+  eureka_service_address: "http://eureka:8761/eureka"
 
 ---
 
@@ -21,4 +21,4 @@ kind: ConfigMap
 metadata:
   name: mysql-cm
 data:
-  hostname: "mysql-0.mysql"
+  hostname: "mysql"

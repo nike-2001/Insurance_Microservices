@@ -5,30 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c4d2e4ab-721a-43c5-aa7f-9a3aa34bfcef" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../CloudGateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../CloudGateway/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CloudGateway/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../CloudGateway/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConfigServer/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ConfigServer/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloud-gateway-deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/cloud-gateway-deployment.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config-maps.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config-maps.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config-server-deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config-server-deployment.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.github/workflows/ci-cd.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../DOCKER_K8S_VALIDATION_REPORT.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../JENKINS_SETUP_GUIDE.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Jenkinsfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ingress.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/namespace.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../init-db.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jenkins-config.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jenkins-guide.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ClaimService/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../ClaimService/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance-product-service-deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/insurance-product-service-deployment.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysql-deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/mysql-deployment.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service-deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/order-service-deployment.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service-deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service-deployment.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service-deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/product-service-deployment.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/redis-deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/redis-deployment.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-registry-statefulset.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/service-registry-statefulset.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zipkin-deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/zipkin-deployment.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../OrderService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../OrderService/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../OrderService/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../OrderService/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PaymentService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../PaymentService/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PaymentService/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../PaymentService/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ProductService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ProductService/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ProductService/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../ProductService/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../service-registry/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../service-registry/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../service-registry/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../service-registry/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PolicyService/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../PolicyService/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ProductService/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../ProductService/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,26 +30,30 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
-  <component name="KubernetesApiProvider"><![CDATA[{
-  "isMigrated": true
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 6
-}]]></component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="2yVw4LH1wARdOgYaf0o5GpE3aTx" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "feature/k8s-impl",
+    "git-widget-placeholder": "feature/cicd-impl",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Korrapati/Interview Prep/SpringBoot_Udemy/K8s",
+    "last_opened_file_path": "D:/Korrapati/Insurance_Project/jenkins-config.yaml",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -84,10 +80,14 @@
       <option name="presentableId" value="Default" />
       <updated>1749932855536</updated>
       <workItem from="1749932856654" duration="1709000" />
+      <workItem from="1751246614553" duration="893000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
 </project>

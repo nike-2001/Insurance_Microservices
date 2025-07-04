@@ -13,8 +13,8 @@ spec:
     spec:
       containers:
         - name: claim-service-app
-          image: nikhilkorrapati/claimservice
-          imagePullPolicy: Always
+          image: insurance/claim-service:latest
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8084
           env:

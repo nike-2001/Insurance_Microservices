@@ -13,8 +13,8 @@ spec:
     spec:
       containers:
         - name: policy-service-app
-          image: nikhilkorrapati/policyservice
-          imagePullPolicy: Always
+          image: insurance/policy-service:latest
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8082
           env:

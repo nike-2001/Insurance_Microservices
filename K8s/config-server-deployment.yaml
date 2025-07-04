@@ -13,8 +13,8 @@ spec:
     spec:
       containers:
         - name: config-server-app
-          image: nikhilkorrapati/configserver
-          imagePullPolicy: Always
+          image: insurance/config-server:latest
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 9296
           env:

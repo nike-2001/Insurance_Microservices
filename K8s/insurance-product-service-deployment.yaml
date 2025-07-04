@@ -13,10 +13,10 @@ spec:
     spec:
       containers:
         - name: product-service-app
-          image: nikhilkorrapati/productservice
-          imagePullPolicy: Always
+          image: insurance/product-service:latest
+          imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 8082
+            - containerPort: 8083
           env:
             - name: CONFIG_SERVER_URL
               valueFrom:
@@ -45,4 +45,4 @@ spec:
     app: product-service-app
   ports:
     - port: 80
-      targetPort: 8082
+      targetPort: 8083

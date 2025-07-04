@@ -13,8 +13,8 @@ spec:
     spec:
       containers:
         - name: cloud-gateway-app
-          image: nikhilkorrapati/cloudgateway
-          imagePullPolicy: Always
+          image: insurance/cloud-gateway:latest
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 9090
           env:
@@ -36,7 +36,7 @@ kind: Service
 metadata:
   name: cloud-gateway-svc
 spec:
-  type: LoadBalancer
+  type: NodePort
   selector:
     app: cloud-gateway-app
   ports:
