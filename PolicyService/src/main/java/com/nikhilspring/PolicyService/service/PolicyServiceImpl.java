@@ -18,6 +18,8 @@ import com.nikhilspring.PolicyService.repository.ProductRepository;
 import com.nikhilspring.PolicyService.validation.PolicyValidationUtil;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +46,7 @@ public class PolicyServiceImpl implements PolicyService{
     private ClaimService claimService;
 
     @Override
+    @CacheEvict(value = {"policies", "policy-products"}, allEntries = true)
     public long issuePolicy(PolicyRequest policyRequest) {
         log.info("Issuing Policy Request: {}", policyRequest);
         
@@ -131,6 +134,7 @@ public class PolicyServiceImpl implements PolicyService{
     }
 
     @Override
+    @Cacheable(value = "policies", key = "#policyId")
     public PolicyResponse getPolicyDetails(long policyId) {
         log.info("Get policy details for Policy Id : {}", policyId);
 

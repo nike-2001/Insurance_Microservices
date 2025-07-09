@@ -19,6 +19,23 @@ spring:
     name: CLAIM-SERVICE
   config:
     import: configserver:http://${CONFIG_SERVER_URL:localhost:9296}
+  # Redis Configuration
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      timeout: 2000ms
+      database: 0
+      jedis:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: -1ms
+  cache:
+    type: redis
+    redis:
+      time-to-live: 1800000 # 30 minutes in milliseconds
   security:
     oauth2:
       resourceserver:

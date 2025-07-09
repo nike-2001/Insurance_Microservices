@@ -1,5 +1,17 @@
 version: '3'
 services:
+  redis:
+    image: redis:8.0.2
+    container_name: redis
+    ports:
+      - '6379:6379'
+    command: redis-server --protected-mode no
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   mysql:
     image: mysql:8.0
     container_name: mysql
@@ -67,8 +79,12 @@ services:
     environment:
       - CONFIG_SERVER_URL=host.docker.internal:9296
       - EUREKA_SERVER_ADDRESS=http://host.docker.internal:8761/eureka
+      - REDIS_HOST=host.docker.internal
+      - REDIS_PORT=6379
     depends_on:
       configserver:
+        condition: service_healthy
+      redis:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9090/actuator/health"]
@@ -88,10 +104,14 @@ services:
       - CONFIG_SERVER_URL=host.docker.internal:9296
       - EUREKA_SERVER_ADDRESS=http://host.docker.internal:8761/eureka
       - DB_HOST=host.docker.internal
+      - REDIS_HOST=host.docker.internal
+      - REDIS_PORT=6379
     depends_on:
       configserver:
         condition: service_healthy
       mysql:
+        condition: service_healthy
+      redis:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8082/actuator/health"]
@@ -111,10 +131,14 @@ services:
       - CONFIG_SERVER_URL=host.docker.internal:9296
       - EUREKA_SERVER_ADDRESS=http://host.docker.internal:8761/eureka
       - DB_HOST=host.docker.internal
+      - REDIS_HOST=host.docker.internal
+      - REDIS_PORT=6379
     depends_on:
       configserver:
         condition: service_healthy
       mysql:
+        condition: service_healthy
+      redis:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8083/actuator/health"]
@@ -134,10 +158,14 @@ services:
       - CONFIG_SERVER_URL=host.docker.internal:9296
       - EUREKA_SERVER_ADDRESS=http://host.docker.internal:8761/eureka
       - DB_HOST=host.docker.internal
+      - REDIS_HOST=host.docker.internal
+      - REDIS_PORT=6379
     depends_on:
       configserver:
         condition: service_healthy
       mysql:
+        condition: service_healthy
+      redis:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8081/actuator/health"]
@@ -157,10 +185,14 @@ services:
       - CONFIG_SERVER_URL=host.docker.internal:9296
       - EUREKA_SERVER_ADDRESS=http://host.docker.internal:8761/eureka
       - DB_HOST=host.docker.internal
+      - REDIS_HOST=host.docker.internal
+      - REDIS_PORT=6379
     depends_on:
       configserver:
         condition: service_healthy
       mysql:
+        condition: service_healthy
+      redis:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8084/actuator/health"]
