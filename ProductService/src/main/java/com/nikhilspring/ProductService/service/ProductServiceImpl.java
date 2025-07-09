@@ -7,6 +7,8 @@ import com.nikhilspring.ProductService.model.ProductResponse;
 import com.nikhilspring.ProductService.repository.ProductRepository;
 import com.nikhilspring.ProductService.validation.ProductValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +22,7 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
 
     @Override
+    @CacheEvict(value = {"products", "product-by-id"}, allEntries = true)
     public long addProduct(ProductRequest productRequest) {
         // Validate product request using utility
         ProductValidationUtil.validateProductRequest(productRequest);
@@ -52,6 +55,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Cacheable(value = "product-by-id", key = "#productId")
     public ProductResponse getProductById(long productId) {
         // Validate product ID using utility
         ProductValidationUtil.validateProductId(productId);
@@ -62,11 +66,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Cacheable(value = "products", key = "'all-products'")
     public List<ProductResponse> getAllProducts() {
         return productRepository.findAll().stream().map(this::toResponse).collect(Collectors.toList());
     }
 
     @Override
+    @Cacheable(value = "products", key = "'type-' + #productType")
     public List<ProductResponse> getProductsByType(String productType) {
         if (productType == null || productType.trim().isEmpty()) {
             throw new ProductServiceCustomException("Product type cannot be null or empty", "INVALID_PRODUCT_TYPE");
@@ -75,6 +81,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @CacheEvict(value = {"products", "product-by-id"}, allEntries = true)
     public void updateProduct(long productId, ProductRequest productRequest) {
         // Validate product ID and request using utility
         ProductValidationUtil.validateProductId(productId);
@@ -96,6 +103,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @CacheEvict(value = {"products", "product-by-id"}, allEntries = true)
     public void deleteProduct(long productId) {
         // Validate product ID using utility
         ProductValidationUtil.validateProductId(productId);

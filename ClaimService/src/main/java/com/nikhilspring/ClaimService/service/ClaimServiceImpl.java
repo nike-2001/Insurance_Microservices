@@ -8,6 +8,8 @@ import com.nikhilspring.ClaimService.repository.ClaimRepository;
 import com.nikhilspring.ClaimService.validation.ClaimValidationUtil;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -23,6 +25,7 @@ public class ClaimServiceImpl implements ClaimService {
     private ClaimValidationService claimValidationService;
 
     @Override
+    @CacheEvict(value = {"claims", "claim-status"}, allEntries = true)
     public long fileClaim(ClaimRequest claimRequest) {
         log.info("Filing claim: {}", claimRequest);
 
@@ -124,6 +127,7 @@ public class ClaimServiceImpl implements ClaimService {
     }
 
     @Override
+    @Cacheable(value = "claims", key = "'policy-' + #policyId")
     public ClaimResponse getClaimByPolicyId(long policyId) {
         log.info("Getting claim for policy ID: {}", policyId);
 
@@ -143,6 +147,7 @@ public class ClaimServiceImpl implements ClaimService {
     }
 
     @Override
+    @Cacheable(value = "claims", key = "'claim-' + #claimId")
     public ClaimResponse getClaimById(long claimId) {
         log.info("Getting claim by ID: {}", claimId);
 

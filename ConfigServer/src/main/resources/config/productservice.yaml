@@ -14,6 +14,23 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: false
+  # Redis Configuration
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      timeout: 2000ms
+      database: 0
+      jedis:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: -1ms
+  cache:
+    type: redis
+    redis:
+      time-to-live: 7200000 # 2 hours in milliseconds
 
 eureka:
   instance:

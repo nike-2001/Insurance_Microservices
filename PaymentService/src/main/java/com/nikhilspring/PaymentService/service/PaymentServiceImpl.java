@@ -9,6 +9,8 @@ import com.nikhilspring.PaymentService.repository.TransactionDetailsRepository;
 import com.nikhilspring.PaymentService.validation.PaymentValidationUtil;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -23,6 +25,7 @@ public class PaymentServiceImpl implements PaymentService{
     private TransactionDetailsRepository transactionDetailsRepository;
 
     @Override
+    @CacheEvict(value = {"payments", "payment-status"}, allEntries = true)
     public long processPayment(PaymentRequest paymentRequest) {
         log.info("Processing Payment: {}", paymentRequest);
 
@@ -117,6 +120,7 @@ public class PaymentServiceImpl implements PaymentService{
     }
 
     @Override
+    @Cacheable(value = "payments", key = "'policy-' + #policyId")
     public PaymentResponse getPaymentDetailsByPolicyId(String policyId) {
         log.info("Getting payment details for the Policy Id: {}", policyId);
 
@@ -146,6 +150,7 @@ public class PaymentServiceImpl implements PaymentService{
     }
 
     @Override
+    @Cacheable(value = "payments", key = "'customer-' + #customerId")
     public PaymentResponse getPaymentDetailsByCustomerId(String customerId) {
         log.info("Getting payment details for the Customer Id: {}", customerId);
 
