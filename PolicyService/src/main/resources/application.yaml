@@ -36,6 +36,10 @@ spring:
     type: redis
     redis:
       time-to-live: 1800000 # 30 minutes in milliseconds
+  # Simple Kafka Configuration
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    schema-registry-url: ${SCHEMA_REGISTRY_URL:http://localhost:8081}
   security:
     oauth2:
       resourceserver:

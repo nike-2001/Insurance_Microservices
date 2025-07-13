@@ -1,0 +1,53 @@
+{
+  "type": "record",
+  "name": "PaymentEvent",
+  "namespace": "com.nikhilspring.insurance.events",
+  "doc": "Simple payment event for policy activation and claim processing",
+  "fields": [
+    {
+      "name": "paymentId",
+      "type": "long",
+      "doc": "Unique payment identifier"
+    },
+    {
+      "name": "policyId",
+      "type": ["null", "long"],
+      "default": null,
+      "doc": "Policy ID if this is a policy payment"
+    },
+    {
+      "name": "claimId",
+      "type": ["null", "long"],
+      "default": null,
+      "doc": "Claim ID if this is a claim payment"
+    },
+    {
+      "name": "amount",
+      "type": "double",
+      "doc": "Payment amount"
+    },
+    {
+      "name": "status",
+      "type": {
+        "type": "enum",
+        "name": "PaymentStatus",
+        "symbols": ["COMPLETED", "FAILED", "PENDING"]
+      },
+      "doc": "Payment status"
+    },
+    {
+      "name": "paymentType",
+      "type": {
+        "type": "enum",
+        "name": "PaymentType",
+        "symbols": ["PREMIUM", "CLAIM_PAYMENT"]
+      },
+      "doc": "Type of payment"
+    },
+    {
+      "name": "timestamp",
+      "type": "long",
+      "doc": "Payment timestamp in milliseconds"
+    }
+  ]
+} 
