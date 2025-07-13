@@ -12,6 +12,42 @@ services:
       timeout: 5s
       retries: 5
 
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.4.0
+    container_name: zookeeper
+    ports:
+      - '2181:2181'
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  kafka:
+    image: confluentinc/cp-kafka:7.4.0
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - '9092:9092'
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+
+  schema-registry:
+    image: confluentinc/cp-schema-registry:7.4.0
+    container_name: schema-registry
+    depends_on:
+      - kafka
+    ports:
+      - '8081:8081'
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'kafka:29092'
+      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
+
   mysql:
     image: mysql:8.0
     container_name: mysql
@@ -106,6 +142,8 @@ services:
       - DB_HOST=host.docker.internal
       - REDIS_HOST=host.docker.internal
       - REDIS_PORT=6379
+      - KAFKA_BOOTSTRAP_SERVERS=host.docker.internal:9092
+      - SCHEMA_REGISTRY_URL=http://host.docker.internal:8081
     depends_on:
       configserver:
         condition: service_healthy
@@ -113,6 +151,10 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+      kafka:
+        condition: service_started
+      schema-registry:
+        condition: service_started
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8082/actuator/health"]
       interval: 10s
@@ -160,6 +202,8 @@ services:
       - DB_HOST=host.docker.internal
       - REDIS_HOST=host.docker.internal
       - REDIS_PORT=6379
+      - KAFKA_BOOTSTRAP_SERVERS=host.docker.internal:9092
+      - SCHEMA_REGISTRY_URL=http://host.docker.internal:8081
     depends_on:
       configserver:
         condition: service_healthy
@@ -167,6 +211,10 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+      kafka:
+        condition: service_started
+      schema-registry:
+        condition: service_started
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8081/actuator/health"]
       interval: 10s
@@ -187,6 +235,8 @@ services:
       - DB_HOST=host.docker.internal
       - REDIS_HOST=host.docker.internal
       - REDIS_PORT=6379
+      - KAFKA_BOOTSTRAP_SERVERS=host.docker.internal:9092
+      - SCHEMA_REGISTRY_URL=http://host.docker.internal:8081
     depends_on:
       configserver:
         condition: service_healthy
@@ -194,6 +244,10 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+      kafka:
+        condition: service_started
+      schema-registry:
+        condition: service_started
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8084/actuator/health"]
       interval: 10s
